@@ -1,6 +1,6 @@
 body{
     font-weight: bold !important;
-    font-family: cursive !important;
+    font-family: Arial !important;
 }
 
 #top-badge-div{
@@ -20,14 +20,14 @@ body{
     border-radius: 10px;
 }
 /* Style the tab */
-.tab {
+.tab,.tabMonth {
     overflow: hidden;
     border: 1px solid #6053c9;
     background-color: #6053c9;
   }
   
   /* Style the buttons inside the tab */
-  .tab button {
+  .tab button ,.tabMonth button{
     background-color: inherit;
     float: left;
     color: #a098e5;
@@ -42,13 +42,13 @@ body{
   }
   
   /* Change background color of buttons on hover */
-  .tab button:hover {
+  .tab button:hover ,  .tabMonth button:hover{
     background-color: #a098e5;
     color: white;
 }
   
   /* Create an active/current tablink class */
-  .tab button.active {
+  .tab button.active,  .tabMonth button.active {
     background-color: #0b2f90;
     color: white;
   }
@@ -82,8 +82,8 @@ body{
   /* Create a custom radio button */
   .checkmark {
     position: absolute;
-    top: 0;
-    left: 0;
+    top: 10px;
+    left: 5px;
     height: 25px;
     width: 25px;
     background-color: #eee;
@@ -144,7 +144,8 @@ body{
   }
 
   .yellowFont{
-      color: #ffb30e;
+    color: #ffb30e;
+    font-weight: 800;
   }
 
   .monthEachDiv{
@@ -156,7 +157,7 @@ body{
 
   #discount{
     background-color: #506cb7;
-    padding: 5px;
+    padding: 2px;
     border-radius: 10px;
   }
 
@@ -178,6 +179,11 @@ body{
     margin-left: -313px;
     margin-top: 15px;
 }
+.courseDivsMonths{
+  margin-left: -200px;
+  margin-top: 15px;
+}
+
 .tabcontent2{
     color: white;
 }
