@@ -56,7 +56,7 @@ $( document ).ready(function() {
         values =  yearBoards[0][v];
         var discount = (Number(values.price)*Number(values.discount))/100;
         var discountedPrice = Number(values.price) - discount;
-        $("#"+ids).append('<div class="col-sm-12"><div class="col-sm-2"><span class="boldFont">Total<br>Sessions</span><br><span class="bigFont yellowFont">'+values.total_sessions+'</span></div><div class="col-sm-2"><span class="boldFont">Online Pre<br>Assessments</span><br><span class="bigFont yellowFont">'+values.online_pre_assignments+'</span></div><div class="col-sm-2"><span class="boldFont">Online Post<br>Assessments</span><br><span class="bigFont yellowFont">'+values.online_post_assignments+'</span></div><div class="col-sm-2"><span class="boldFont">Online <br>Practice</span><br><span class="bigFont yellowFont">'+values.online_assignments+'</span></div> <div class="col-sm-2"><span class="boldFont">Online <br>Tests</span><br><span class="bigFont yellowFont">'+values.online_tests+'</span></div><div class="col-sm-2"><span class="boldFont">Career Counselling<br>Sessions with Edu Coach</span><br><span class="bigFont yellowFont">'+values.total_sessions+'</span></div></div><div class="col-sm-12"><h5 style="font-weight:bold">Course Topic include</h5><div class="col-sm-4"><span class="yellowFont">Introduction<br><div style="color:white" id="syllabus'+ids+'"></div></span></div></div><div class="col-sm-12 monthFooter"><div class="col-sm-4"><span id="discount" style="float:right">Filling out soon</span><br><span class="bigFont">Vaccant Seats</span><span class="yellowFont bigFont">'+values.seats+' seats</span><br><span>Not a classroom, but 1:1 sessions.</span></div><div class="col-sm-4"><span id="discount" style="float:right">'+values.discount+'% OFF</span><br><span class="">Subscription cost: <span class="yellowFont">₹ '+discountedPrice+'</span> <span class="boldFont" style="font-size: 13px;"> <strike> ₹ '+values.price+'</strike></span><br><span>This cost is inclusive of the tablet cost.</span><br><span>'+values.per_class_price+'</span></span></div><div class="col-sm-2"><button class="" id="bookNow">Book Now</button></div><span style="float: left;margin-top: 20px;">You can also avail a 8 inch and 10 inch tablet with your Subscription.</span><span style="float: right;margin-top: 20px;">Guaranteed <u>terms &amp; conditions</u> apply*</span></div>');
+        $("#"+ids).append('<div class="col-sm-12"><div class="col-sm-2"><span class="boldFont">Total<br>Sessions</span><br><span class="bigFont yellowFont">'+values.total_sessions+'</span></div><div class="col-sm-2"><span class="boldFont">Online Pre<br>Assessments</span><br><span class="bigFont yellowFont">'+values.online_pre_assignments+'</span></div><div class="col-sm-2"><span class="boldFont">Online Post<br>Assessments</span><br><span class="bigFont yellowFont">'+values.online_post_assignments+'</span></div><div class="col-sm-2"><span class="boldFont">Online <br>Practice</span><br><span class="bigFont yellowFont">'+values.online_assignments+'</span></div> <div class="col-sm-2"><span class="boldFont">Online <br>Tests</span><br><span class="bigFont yellowFont">'+values.online_tests+'</span></div><div class="col-sm-2"><span class="boldFont">Career Counselling<br>Sessions with Edu Coach</span><br><span class="bigFont yellowFont">'+values.total_sessions+'</span></div></div><div class="col-sm-12"><h5 class="bigFont" style="font-weight:bold">Course Topic include</h5><div class="col-sm-4"><span class="yellowFont">Introduction<br><div style="color:white" id="syllabus'+ids+'"></div></span></div></div><div class="col-sm-12 monthFooter"><div class="col-sm-4"><span id="discount" style="float:right">Filling out soon</span><br><span class="bigFont">Vaccant Seats</span><span class="yellowFont bigFont">'+values.seats+' seats</span><br><span>Not a classroom, but 1:1 sessions.</span></div><div class="col-sm-4"><span id="discount" style="float:right">'+values.discount+'% OFF</span><br><span class="">Subscription cost: <span class="yellowFont bigFont">₹ '+discountedPrice+'</span> <span class="yellowFont boldFont" style="font-size: 13px;"> <strike> ₹ '+values.price+'</strike></span><br><span>This cost is inclusive of the tablet cost.</span><br><span>'+values.per_class_price+'</span></span></div><div class="col-sm-2"><button class="" id="bookNow">Book Now</button></div><span style="float: left;margin-top: 20px;">You can also avail a 8 inch and 10 inch tablet with your Subscription.</span><span style="float: right;margin-top: 20px;">Guaranteed <u>terms &amp; conditions</u> apply*</span></div>');
         var syllabus = values.syllabus;
         if(Array.isArray(syllabus)){
 
@@ -149,26 +149,67 @@ $( document ).ready(function() {
     $("body").on("change","#monthGrade select",function(){
         var board = $(this).val();
         var boardsNames =[];
-        var currentBoard = [];
+        var currentBoard1 = [];
+        var currentBoard2 = [];
         $.each(monthlyData[0],function(i,v){
             if(v.grade == board){
                 if(v.boards.general != undefined){
-                    currentBoard.push(v.boards.general);
-                }
-                if(v.boards.CBSE != undefined){
-                    currentBoard.push(v.boards.CBSE);
+                    currentBoard1.push(v.boards.general);
+                }else{
+                    currentBoard2.push(v.boards)
                 }
             }
         })
        // boardsNames.push(Object.keys(currentBoard[0]))
         $("#monthlyDiv").empty();
-        $.each(currentBoard,function(i,v){
-            $.each(v,function(i1,v1){
+        if(currentBoard1 != undefined){
+            $.each(currentBoard1,function(i,v){
+                $.each(v,function(i1,v1){
+                    var discount = (Number(v1.price)*Number(v1.discount))/100;
+                    var discountedPrice = Number(v1.price) - discount;
+                    $("#monthlyDiv").append('<div class="col-sm-12 monthEachDiv"><div class="container col-sm-1 text-center"><input type="radio" name="radio"><span class="checkmark"></span></div><div class="col-sm-3"><span class="bigFont">'+v1.valid+'</span></br><span>'+v1.refund+'</span></div><div class="col-sm-4"><span class="bigFont yellowFont"> &#x20B9; '+discountedPrice+'</span> <span class="yellowFont"> <strike> &#x20B9; '+v1.price+'</strike></span><br><span id="discount">'+v1.discount+'% OFF</span></div><div class="col-sm-4"><span class="bigFont"> &#x20B9; '+v1.per_class_price+' per session</span><br><span>'+v1.total_sessions+' Sessions</span></div></div>');
+                })
+            })
+        }
+        $(".tabMonth").empty();
+        $(".courseDivsMonths").empty();
+
+        if(currentBoard2.length>0){
+            boardsNames.push(Object.keys(currentBoard2[0]));
+            $.each(boardsNames[0],function(i,v){
+            var ids = v.replace(" ","");
+            if(ids.indexOf("JEEMain+Advanced") > -1){
+                ids = "JEEMainAdvanced"
+            }
+            $(".tabMonth").append('<button class="tablinks2" id="'+ids+'Courses" onclick=openCourses(event,'+ids+'month)>'+v+'</button>');
+        })
+        
+        $.each(boardsNames[0],function(i,v){
+            var ids = v.replace(" ","");
+            if(ids.indexOf("JEEMain+Advanced") > -1){
+                ids = "JEEMainAdvanced"
+            }
+            $(".courseDivsMonths").append('<div id="'+ids+'month" class="tabcontent2"><div id="monthlyDiv'+ids+'"></div></div>');
+        })
+
+        var keys = Object.keys(currentBoard2[0]);
+        var value = [];
+        var ids = "";
+
+        $.each(keys,function(i,v){
+            ids = v.replace(" ","");
+            if(ids.indexOf("JEEMain+Advanced") > -1){
+                ids = "JEEMainAdvanced"
+            }
+            value =  currentBoard2[0][v];
+            $.each(value,function(i,v1){
                 var discount = (Number(v1.price)*Number(v1.discount))/100;
                 var discountedPrice = Number(v1.price) - discount;
-                $("#monthlyDiv").append('<div class="col-sm-12 monthEachDiv"><div class="container col-sm-1 text-center"><input type="radio" name="radio"><span class="checkmark"></span></div><div class="col-sm-3"><span class="bigFont">'+v1.valid+'</span></br><span>'+v1.refund+'</span></div><div class="col-sm-4"><span class="bigFont yellowFont"> &#x20B9; '+discountedPrice+'</span> <span class="yellowFont"> <strike> &#x20B9; '+v1.price+'</strike></span><br><span id="discount">'+v1.discount+'% OFF</span></div><div class="col-sm-4"><span class="bigFont"> &#x20B9; '+v1.per_class_price+' per session</span><br><span>'+v1.total_sessions+' Sessions</span></div></div>');
+                $("#monthlyDiv"+ids).append('<div class="col-sm-12 monthEachDiv"><div class="container col-sm-1 text-center"><input type="radio" name="radio"><span class="checkmark"></span></div><div class="col-sm-3"><span class="bigFont">'+v1.valid+'</span></br><span>'+v1.refund+'</span></div><div class="col-sm-4"><span class="bigFont yellowFont"> &#x20B9; '+discountedPrice+'</span> <span class="yellowFont"> <strike> &#x20B9; '+v1.price+'</strike></span><br><span id="discount">'+v1.discount+'% OFF</span></div><div class="col-sm-4"><span class="bigFont"> &#x20B9; '+v1.per_class_price+' per session</span><br><span>'+v1.total_sessions+' Sessions</span></div></div>');    
             })
-        })
+         })
+         $("#CBSECourses").trigger("click")
+        }
     })
      
 
@@ -188,6 +229,11 @@ function openType(evt, type) {
     }
     document.getElementById(type).style.display = "block";
     evt.target.className += " active";
+    if(type == "yearly"){
+        $("#CBSECourse").trigger("click");
+    }else{
+        $("#CBSECourses").trigger("click"); 
+    }
   }
 
   function openCourses(evt, courses) {
